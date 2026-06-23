@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Bahan Pembelajaran — SMK [Nama Sekolah Anda]</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0e2d4a;
+  --navy2:#16456e;
+  --teal:#0b7a6a;
+  --gold:#e8830a;
+  --gold-light:#fef3e2;
+  --bg:#f3f6fa;
+  --white:#ffffff;
+  --text:#0e2d4a;
+  --muted:#6b7c93;
+  --border:#e4ecf5;
+  --radius:12px;
+  --shadow:0 2px 12px rgba(14,45,74,0.08);
+  --shadow-hover:0 8px 28px rgba(14,45,74,0.14);
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* ─── NAVBAR ─── */
+nav{position:sticky;top:0;z-index:100;background:var(--navy);height:66px;display:flex;align-items:center;padding:0 2rem;gap:2rem;box-shadow:0 2px 16px rgba(0,0,0,0.18)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.nav-logo-box{width:38px;height:38px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.nav-brand-text{color:#fff;font-size:15px;font-weight:700;line-height:1.2}
+.nav-brand-text span{display:block;font-size:11px;font-weight:400;opacity:.65;margin-top:1px}
+nav ul{display:flex;gap:0;list-style:none;margin-left:auto}
+nav ul li a{color:rgba(255,255,255,.72);text-decoration:none;font-size:13.5px;font-weight:500;padding:8px 14px;border-radius:7px;display:block;transition:all .2s}
+nav ul li a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{background:var(--gold)!important;color:var(--navy)!important;font-weight:700!important;padding:8px 18px!important}
+.nav-cta:hover{background:#f59820!important}
+.nav-toggle{display:none;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;margin-left:auto}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#0d4a7a 55%,var(--teal) 100%);padding:72px 2rem 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-block;background:rgba(232,131,10,.18);color:#fbbf4e;border:1px solid rgba(232,131,10,.35);padding:5px 18px;border-radius:30px;font-size:11.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:2.6rem;font-weight:800;color:#fff;line-height:1.18;margin-bottom:14px}
+.hero h1 span{color:#fbbf4e}
+.hero p{font-size:1rem;color:rgba(255,255,255,.78);max-width:560px;margin:0 auto 38px;font-weight:400}
+.search-wrap{max-width:560px;margin:0 auto 0;display:flex;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.22)}
+.search-wrap input{flex:1;border:none;outline:none;padding:15px 20px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text)}
+.search-wrap input::placeholder{color:#aab4c2}
+.search-wrap button{background:var(--gold);border:none;padding:0 26px;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;transition:background .2s;white-space:nowrap}
+.search-wrap button:hover{background:#f59820}
+
+/* ─── STATS BAR ─── */
+.stats-bar{background:#fff;border-bottom:1px solid var(--border)}
+.stats-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.stat{padding:22px 16px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat .num{font-size:1.9rem;font-weight:800;color:var(--navy)}
+.stat .lbl{font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+
+/* ─── MAIN ─── */
+.main{max-width:1080px;margin:0 auto;padding:3rem 1.5rem}
+
+/* ─── SECTION HEADER ─── */
+.sec-hd{margin-bottom:1.5rem}
+.sec-hd h2{font-size:1.45rem;font-weight:800;color:var(--navy)}
+.sec-hd p{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* ─── SUBJECT CARDS ─── */
+.subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:3rem}
+.subj-card{background:#fff;border:2px solid var(--border);border-radius:var(--radius);padding:18px 12px;text-align:center;cursor:pointer;transition:all .22s;user-select:none}
+.subj-card:hover{border-color:var(--navy2);transform:translateY(-2px);box-shadow:var(--shadow)}
+.subj-card.active{border-color:var(--navy);background:var(--navy);color:#fff}
+.subj-card .s-icon{font-size:26px;margin-bottom:8px;display:block}
+.subj-card .s-name{font-size:12.5px;font-weight:700;color:var(--text)}
+.subj-card.active .s-name{color:#fff}
+.subj-card .s-count{font-size:11px;color:var(--muted);margin-top:3px}
+.subj-card.active .s-count{color:rgba(255,255,255,.6)}
+
+/* ─── FILTER ROW ─── */
+.filter-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.form-btns{display:flex;gap:6px;flex-wrap:wrap}
+.form-btn{padding:7px 16px;border:1.5px solid var(--border);background:#fff;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .18s}
+.form-btn:hover{border-color:var(--navy2);color:var(--navy)}
+.form-btn.active{background:var(--gold);border-color:var(--gold);color:#fff}
+
+/* ─── RESULTS COUNT ─── */
+#resultsInfo{font-size:13px;color:var(--muted);margin-bottom:1.5rem;font-weight:500}
+
+/* ─── MATERIALS GRID ─── */
+.mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+
+/* ─── MATERIAL CARD ─── */
+.mat-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);display:flex;flex-direction:column;transition:all .22s;overflow:hidden}
+.mat-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px);border-color:transparent}
+.mat-card-top{height:5px}
+.mat-body{padding:20px;flex:1}
+.mat-icon-row{display:flex;align-items:flex-start;gap:13px;margin-bottom:13px}
+.mat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.mat-subj{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:3px}
+.mat-title{font-size:15px;font-weight:700;color:var(--text);line-height:1.35}
+.mat-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-top:10px}
+.mat-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.b-form{background:#e8f0fb;color:#1a4a87}
+.b-pdf{background:#fde8e8;color:#b91c1c}
+.b-nota{background:#e0f4f1;color:#0b7a6a}
+.b-latihan{background:#f3e8ff;color:#7c3aed}
+.b-video{background:#e8fde8;color:#15803d}
+.mat-btn{background:var(--navy);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap;flex-shrink:0}
+.mat-btn:hover{background:var(--navy2)}
+
+/* ─── EMPTY STATE ─── */
+.empty{grid-column:1/-1;text-align:center;padding:5rem 2rem}
+.empty .e-ico{font-size:52px;margin-bottom:16px}
+.empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty p{font-size:13px;color:var(--muted)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--navy);color:#fff;margin-top:5rem;padding:3.5rem 2rem 2rem}
+.footer-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.f-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.f-logo{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.f-title{font-size:15px;font-weight:700}
+.f-desc{font-size:13px;opacity:.65;line-height:1.75}
+.f-col h4{font-size:13px;font-weight:700;margin-bottom:14px;opacity:.9}
+.f-col ul{list-style:none}
+.f-col ul li{margin-bottom:9px}
+.f-col ul li a{color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;transition:color .18s}
+.f-col ul li a:hover{color:var(--gold)}
+.footer-bottom{max-width:1080px;margin:1.8rem auto 0;text-align:center;font-size:12px;opacity:.4}
+
+/* ─── SUBJECT COLORS ─── */
+.c-bm .mat-card-top,.c-bm .mat-icon{background:#16a34a}
+.c-bm .mat-icon{background:#dcfce7}
+.c-bm .mat-subj{color:#15803d}
+.c-bm .mat-card-top{background:#16a34a}
+
+.c-bi .mat-card-top,.c-bi .mat-icon{background:#2563eb}
+.c-bi .mat-icon{background:#dbeafe}
+.c-bi .mat-subj{color:#1d4ed8}
+.c-bi .mat-card-top{background:#2563eb}
+
+.c-math .mat-card-top{background:#ea580c}
+.c-math .mat-icon{background:#fff7ed}
+.c-math .mat-subj{color:#c2410c}
+
+.c-sains .mat-card-top{background:#0891b2}
+.c-sains .mat-icon{background:#e0f9ff}
+.c-sains .mat-subj{color:#0e7490}
+
+.c-fizik .mat-card-top{background:#7c3aed}
+.c-fizik .mat-icon{background:#f3e8ff}
+.c-fizik .mat-subj{color:#6d28d9}
+
+.c-kimia .mat-card-top{background:#d97706}
+.c-kimia .mat-icon{background:#fef9c3}
+.c-kimia .mat-subj{color:#b45309}
+
+.c-bio .mat-card-top{background:#059669}
+.c-bio .mat-icon{background:#d1fae5}
+.c-bio .mat-subj{color:#047857}
+
+.c-sejarah .mat-card-top{background:#be185d}
+.c-sejarah .mat-icon{background:#fce7f3}
+.c-sejarah .mat-subj{color:#9d174d}
+
+.c-geo .mat-card-top{background:#0f766e}
+.c-geo .mat-icon{background:#ccfbf1}
+.c-geo .mat-subj{color:#0f766e}
+
+.c-pi .mat-card-top{background:#1d4ed8}
+.c-pi .mat-icon{background:#dbeafe}
+.c-pi .mat-subj{color:#1e40af}
+
+.c-moral .mat-card-top{background:#db2777}
+.c-moral .mat-icon{background:#fce7f3}
+.c-moral .mat-subj{color:#be185d}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.mat-card{animation:fadeUp .3s ease both}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  nav ul{display:none}
+  nav ul.open{display:flex;flex-direction:column;position:absolute;top:66px;left:0;right:0;background:var(--navy);padding:12px;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  .nav-toggle{display:block}
+  .hero h1{font-size:1.9rem}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
+}
+@media(max-width:600px){
+  .hero{padding:52px 1.2rem 44px}
+  .subjects-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo-box">📚</div>
+    <div class="nav-brand-text">Portal Pembelajaran
+      <span>SMK [Nama Sekolah Anda]</span>
+    </div>
+  </a>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">☰</button>
+  <ul id="navMenu">
+    <li><a href="#">Laman Utama</a></li>
+    <li><a href="#">Subjek</a></li>
+    <li><a href="#">Tingkatan</a></li>
+    <li><a href="#">Guru</a></li>
+    <li><a href="#">Hubungi Kami</a></li>
+    <li><a href="#" class="nav-cta">Log Masuk</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-tag">Portal Rasmi Sekolah</div>
+  <h1>Bahan Pembelajaran<br><span>Di Hujung Jari Anda</span></h1>
+  <p>Akses nota, latihan, video dan bahan rujukan untuk semua subjek SPM — percuma, bila-bila masa.</p>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Cari bahan pelajaran... (contoh: Matematik, Sejarah, Komsas)" oninput="renderMaterials()">
+    <button onclick="renderMaterials()">🔍 Cari</button>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="num" id="sSubj">11</div><div class="lbl">Subjek Tersedia</div></div>
+    <div class="stat"><div class="num" id="sMat">38</div><div class="lbl">Bahan Pembelajaran</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">Tingkatan (1–5)</div></div>
+    <div class="stat"><div class="num">24/7</div><div class="lbl">Akses Percuma</div></div>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="main">
+
+  <!-- Subject Picker -->
+  <div class="sec-hd">
+    <h2>📖 Pilih Subjek</h2>
+    <p>Klik pada mana-mana subjek untuk menapis bahan pembelajaran</p>
+  </div>
+  <div class="subjects-grid" id="subjGrid"></div>
+
+  <!-- Filter + Count -->
+  <div class="filter-row">
+    <div class="sec-hd" style="margin-bottom:0"><h2>Bahan Pembelajaran</h2></div>
+    <div class="form-btns" id="formBtns">
+      <button class="form-btn active" onclick="setForm('Semua',this)">Semua Tingkatan</button>
+      <button class="form-btn" onclick="setForm('T1',this)">Tingkatan 1</button>
+      <button class="form-btn" onclick="setForm('T2',this)">Tingkatan 2</button>
+      <button class="form-btn" onclick="setForm('T3',this)">Tingkatan 3</button>
+      <button class="form-btn" onclick="setForm('T4',this)">Tingkatan 4</button>
+      <button class="form-btn" onclick="setForm('T5',this)">Tingkatan 5</button>
+    </div>
+  </div>
+  <p id="resultsInfo"></p>
+
+  <!-- Materials -->
+  <div class="mat-grid" id="matGrid"></div>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="f-brand">
+        <div class="f-logo">📚</div>
+        <span class="f-title">Portal Pembelajaran</span>
+      </div>
+      <p class="f-desc">Platform pembelajaran digital untuk pelajar SMK [Nama Sekolah]. Kami menyediakan bahan pembelajaran berkualiti untuk membantu pelajar mencapai kecemerlangan akademik.</p>
+    </div>
+    <div class="f-col">
+      <h4>Pautan Pantas</h4>
+      <ul>
+        <li><a href="#">Laman Utama</a></li>
+        <li><a href="#">Semua Subjek</a></li>
+        <li><a href="#">Jadual Peperiksaan</a></li>
+        <li><a href="#">Keputusan SPM</a></li>
+        <li><a href="#">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Sumber Berguna</h4>
+      <ul>
+        <li><a href="https://www.moe.gov.my" target="_blank">KPM</a></li>
+        <li><a href="https://www.mpm.edu.my" target="_blank">MPM</a></li>
+        <li><a href="https://www.kssm.moe.gov.my" target="_blank">KSSM</a></li>
+        <li><a href="#">Laman Web Sekolah</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Hubungi Kami</h4>
+      <ul>
+        <li><a href="#">📍 [Alamat Sekolah]</a></li>
+        <li><a href="#">📞 [No. Telefon]</a></li>
+        <li><a href="#">✉️ [E-mel Sekolah]</a></li>
+        <li><a href="#">🕐 Isnin–Jumaat, 7am–5pm</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 SMK [Nama Sekolah]. Hak Cipta Terpelihara. Dibangunkan untuk kemudahan pelajar.</div>
+</footer>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const SUBJECTS = [
+  {id:'semua',name:'Semua',icon:'📚'},
+  {id:'bm',name:'B. Malaysia',icon:'📝'},
+  {id:'bi',name:'B. Inggeris',icon:'🌐'},
+  {id:'math',name:'Matematik',icon:'🔢'},
+  {id:'addmath',name:'Add. Maths',icon:'📐'},
+  {id:'sains',name:'Sains',icon:'🔬'},
+  {id:'fizik',name:'Fizik',icon:'⚡'},
+  {id:'kimia',name:'Kimia',icon:'🧪'},
+  {id:'bio',name:'Biologi',icon:'🧬'},
+  {id:'sejarah',name:'Sejarah',icon:'🏛️'},
+  {id:'geo',name:'Geografi',icon:'🗺️'},
+  {id:'pi',name:'Pend. Islam',icon:'☪️'},
+  {id:'moral',name:'P. Moral',icon:'🌸'},
+];
+
+// Anda boleh tambah/ubah bahan di sini ↓
+const MATERIALS = [
+  // ── Bahasa Malaysia ──
+  {s:'bm',c:'c-bm',icon:'📝',title:'Nota Tatabahasa BM Lengkap',desc:'Rangkuman tatabahasa Bahasa Malaysia termasuk kata kerja, kata adjektif, kata hubung, dan frasa nama.',type:'nota',form:'T3'},
+  {s:'bm',c:'c-bm',icon:'📝',title:'Panduan Penulisan Karangan',desc:'Teknik menulis karangan yang baik: struktur, isi, bahasa, dan strategi menjawab soalan KSSM.',type:'pdf',form:'T4'},
+  {s:'bm',c:'c-bm',icon:'📝',title:'Latihan Pemahaman Teks',desc:'Latihan membaca dan menjawab soalan pemahaman daripada pelbagai jenis teks.',type:'latihan',form:'T5'},
+  {s:'bm',c:'c-bm',icon:'📝',title:'Komsas: Analisis Puisi & Prosa',desc:'Panduan menganalisis karya sastera dalam komponen KOMSAS untuk kertas BM.',type:'nota',form:'T4'},
+
+  // ── Bahasa Inggeris ──
+  {s:'bi',c:'c-bi',icon:'🌐',title:'English Grammar Essentials',desc:'Complete guide to English grammar: tenses, sentence structure, articles, and punctuation for SPM.',type:'nota',form:'T3'},
+  {s:'bi',c:'c-bi',icon:'🌐',title:'Essay Writing for SPM',desc:'Step-by-step guide to writing formal and informal essays, reports, and speeches.',type:'pdf',form:'T5'},
+  {s:'bi',c:'c-bi',icon:'🌐',title:'Reading Comprehension Practice',desc:'A set of practice texts with guided questions to sharpen comprehension skills.',type:'latihan',form:'T4'},
+
+  // ── Matematik ──
+  {s:'math',c:'c-math',icon:'🔢',title:'Algebra: Persamaan Linear',desc:'Kaedah menyelesaikan persamaan linear satu dan dua pemboleh ubah dengan langkah-langkah terperinci.',type:'nota',form:'T1'},
+  {s:'math',c:'c-math',icon:'🔢',title:'Geometri: Luas & Perimeter',desc:'Formula dan latihan berkaitan luas, perimeter, dan isipadu pelbagai bentuk 2D dan 3D.',type:'pdf',form:'T2'},
+  {s:'math',c:'c-math',icon:'🔢',title:'Statistik: Graf dan Data',desc:'Cara membina dan menganalisis pelbagai jenis graf untuk kertas Matematik.',type:'nota',form:'T3'},
+  {s:'math',c:'c-math',icon:'🔢',title:'Koleksi Soalan SPM 2019–2023',desc:'Soalan-soalan peperiksaan SPM Matematik Kertas 1 & 2 dari tahun 2019 hingga 2023.',type:'latihan',form:'T5'},
+
+  // ── Add Math ──
+  {s:'addmath',c:'c-math',icon:'📐',title:'Fungsi & Hubungan',desc:'Nota lengkap bab fungsi: fungsi gubahan, fungsi songsang, dan jenis-jenis fungsi.',type:'nota',form:'T4'},
+  {s:'addmath',c:'c-math',icon:'📐',title:'Pembezaan (Differentiation)',desc:'Teknik pembezaan asas dan terbitan, serta aplikasinya dalam masalah kadar perubahan.',type:'pdf',form:'T5'},
+  {s:'addmath',c:'c-math',icon:'📐',title:'Pengamiran (Integration)',desc:'Kaedah pengamiran tak tentu dan tentu, serta pengiraan luas di bawah lengkung.',type:'nota',form:'T5'},
+
+  // ── Sains ──
+  {s:'sains',c:'c-sains',icon:'🔬',title:'Sel: Unit Asas Kehidupan',desc:'Struktur dan fungsi sel haiwan dan tumbuhan, organel sel, dan proses asas sel.',type:'nota',form:'T1'},
+  {s:'sains',c:'c-sains',icon:'🔬',title:'Jirim: Sifat dan Perubahan',desc:'Sifat jirim, perubahan fizik dan kimia, serta perbezaan unsur, sebatian, dan campuran.',type:'pdf',form:'T2'},
+  {s:'sains',c:'c-sains',icon:'🔬',title:'Daya, Gerakan & Tenaga',desc:'Konsep daya, hukum Newton, tekanan, dan pelbagai bentuk tenaga dalam kehidupan.',type:'nota',form:'T3'},
+
+  // ── Fizik ──
+  {s:'fizik',c:'c-fizik',icon:'⚡',title:'Daya dan Gerakan',desc:'Hukum Newton, daya geseran, momen daya, kerja, dan kuasa.',type:'nota',form:'T4'},
+  {s:'fizik',c:'c-fizik',icon:'⚡',title:'Elektrik dan Litar',desc:'Bekalan elektrik, komponen litar asas, hukum Ohm, dan litar siri–selari.',type:'pdf',form:'T4'},
+  {s:'fizik',c:'c-fizik',icon:'⚡',title:'Gelombang dan Cahaya',desc:'Sifat gelombang, pantulan, pembiasan, difraksi, dan kegunaan gelombang.',type:'nota',form:'T5'},
+  {s:'fizik',c:'c-fizik',icon:'⚡',title:'Latihan SPM Fizik 2020–2024',desc:'Soalan peperiksaan SPM Fizik Kertas 1, 2, dan 3 dengan skema jawapan.',type:'latihan',form:'T5'},
+
+  // ── Kimia ──
+  {s:'kimia',c:'c-kimia',icon:'🧪',title:'Jadual Berkala Unsur',desc:'Pengenalan jadual berkala, kala dan kumpulan, serta konfigurasi elektron.',type:'nota',form:'T4'},
+  {s:'kimia',c:'c-kimia',icon:'🧪',title:'Ikatan Kimia',desc:'Ikatan ion, ikatan kovalen, ikatan logam, dan sifat sebatian yang terbentuk.',type:'pdf',form:'T4'},
+  {s:'kimia',c:'c-kimia',icon:'🧪',title:'Kimia Organik Asas',desc:'Pengenalan kepada sebatian organik: alkana, alkena, alkohol, dan asid karboksilik.',type:'nota',form:'T5'},
+
+  // ── Biologi ──
+  {s:'bio',c:'c-bio',icon:'🧬',title:'Sistem Respirasi Manusia',desc:'Struktur dan fungsi sistem pernafasan, proses pertukaran gas, dan respirasi aerob/anaerob.',type:'nota',form:'T4'},
+  {s:'bio',c:'c-bio',icon:'🧬',title:'Genetik & Warisan',desc:'Hukum Mendel, genotip, fenotip, penentuan jantina, dan kelainan genetik.',type:'pdf',form:'T5'},
+  {s:'bio',c:'c-bio',icon:'🧬',title:'Ekosistem & Biodiversiti',desc:'Rantai makanan, jaring makanan, kitar bahan organik, dan keseimbangan ekosistem.',type:'nota',form:'T4'},
+
+  // ── Sejarah ──
+  {s:'sejarah',c:'c-sejarah',icon:'🏛️',title:'Kesultanan Melayu Melaka',desc:'Penubuhan, perkembangan, sistem pemerintahan, dan kejatuhan Kesultanan Melayu Melaka.',type:'nota',form:'T1'},
+  {s:'sejarah',c:'c-sejarah',icon:'🏛️',title:'Perjuangan Kemerdekaan Malaya',desc:'Sejarah perjuangan kemerdekaan, tokoh-tokoh utama, dan peristiwa penting 1945–1957.',type:'pdf',form:'T3'},
+  {s:'sejarah',c:'c-sejarah',icon:'🏛️',title:'Malaysia dalam Dunia (T5)',desc:'Peranan Malaysia dalam ASEAN, OIC, PBB, dan hubungan diplomatik antarabangsa.',type:'nota',form:'T5'},
+
+  // ── Geografi ──
+  {s:'geo',c:'c-geo',icon:'🗺️',title:'Bentuk Muka Bumi Malaysia',desc:'Jenis-jenis bentuk muka bumi, proses pembentukan, dan contoh di seluruh Malaysia.',type:'nota',form:'T1'},
+  {s:'geo',c:'c-geo',icon:'🗺️',title:'Iklim, Cuaca & Monsun',desc:'Faktor yang mempengaruhi iklim, angin monsun, dan fenomena cuaca di Malaysia.',type:'pdf',form:'T2'},
+  {s:'geo',c:'c-geo',icon:'🗺️',title:'Kegiatan Ekonomi Malaysia',desc:'Sektor pertanian, perlombongan, perindustrian, dan perkhidmatan dalam ekonomi negara.',type:'nota',form:'T4'},
+
+  // ── Pend. Islam ──
+  {s:'pi',c:'c-pi',icon:'☪️',title:'Asas Aqidah Islam',desc:'Rukun iman, sifat-sifat Allah, kepentingan aqidah, dan pengaruh aqidah dalam kehidupan.',type:'nota',form:'T1'},
+  {s:'pi',c:'c-pi',icon:'☪️',title:'Fiqh Ibadah: Solat & Puasa',desc:'Syarat sah solat dan puasa, cara pelaksanaan, dan hikmah di sebalik ibadah fardhu.',type:'pdf',form:'T3'},
+
+  // ── Moral ──
+  {s:'moral',c:'c-moral',icon:'🌸',title:'36 Nilai Murni: Huraian Lengkap',desc:'Senarai dan huraian 36 nilai murni dalam Pendidikan Moral beserta contoh aplikasi harian.',type:'nota',form:'T3'},
+  {s:'moral',c:'c-moral',icon:'🌸',title:'Isu Moral dalam Masyarakat',desc:'Analisis isu-isu moral semasa dan cara penyelesaian berdasarkan nilai murni.',type:'latihan',form:'T5'},
+];
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let selSubj = 'semua', selForm = 'Semua';
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+const formLabel = {T1:'Tingkatan 1',T2:'Tingkatan 2',T3:'Tingkatan 3',T4:'Tingkatan 4',T5:'Tingkatan 5'};
+const badgeClass = {nota:'b-nota',pdf:'b-pdf',latihan:'b-latihan',video:'b-video'};
+const badgeLabel = {nota:'📖 Nota',pdf:'📄 PDF',latihan:'✏️ Latihan',video:'▶️ Video'};
+const subjName = id => SUBJECTS.find(s=>s.id===id)?.name || id;
+
+// ─── RENDER SUBJECTS ───────────────────────────────────────────────────────
+function renderSubjects(){
+  const grid = document.getElementById('subjGrid');
+  grid.innerHTML = SUBJECTS.map(s=>`
+    <div class="subj-card${selSubj===s.id?' active':''}" onclick="pickSubj('${s.id}')">
+      <span class="s-icon">${s.icon}</span>
+      <div class="s-name">${s.name}</div>
+      <div class="s-count">${s.id==='semua'?MATERIALS.length:MATERIALS.filter(m=>m.s===s.id).length} bahan</div>
+    </div>`).join('');
+}
+
+function pickSubj(id){selSubj=id;renderSubjects();renderMaterials()}
+
+// ─── FORM FILTER ──────────────────────────────────────────────────────────
+function setForm(f,btn){
+  selForm=f;
+  document.querySelectorAll('.form-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMaterials();
+}
+
+// ─── RENDER MATERIALS ─────────────────────────────────────────────────────
+function renderMaterials(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase().trim();
+  const list=MATERIALS.filter(m=>{
+    const matchS=selSubj==='semua'||m.s===selSubj;
+    const matchF=selForm==='Semua'||m.form===selForm;
+    const matchQ=!q||m.title.toLowerCase().includes(q)||m.desc.toLowerCase().includes(q)||subjName(m.s).toLowerCase().includes(q);
+    return matchS&&matchF&&matchQ;
+  });
+
+  document.getElementById('resultsInfo').textContent=
+    `Menunjukkan ${list.length} bahan pembelajaran${selSubj!=='semua'?' — '+subjName(selSubj):''}${selForm!=='Semua'?' ('+formLabel[selForm]+')':''}`;
+
+  const grid=document.getElementById('matGrid');
+  if(!list.length){
+    grid.innerHTML=`<div class="empty"><div class="e-ico">🔍</div><h3>Tiada bahan dijumpai</h3><p>Cuba ubah penapis atau carian anda.</p></div>`;
+    return;
+  }
+  grid.innerHTML=list.map((m,i)=>`
+    <div class="mat-card ${m.c}" style="animation-delay:${i*0.04}s">
+      <div class="mat-card-top"></div>
+      <div class="mat-body">
+        <div class="mat-icon-row">
+          <div class="mat-icon">${m.icon}</div>
+          <div>
+            <div class="mat-subj">${subjName(m.s)}</div>
+            <div class="mat-title">${m.title}</div>
+          </div>
+        </div>
+        <p class="mat-desc">${m.desc}</p>
+      </div>
+      <div class="mat-footer">
+        <div class="badges">
+          <span class="badge b-form">${formLabel[m.form]}</span>
+          <span class="badge ${badgeClass[m.type]||'b-nota'}">${badgeLabel[m.type]||m.type}</span>
+        </div>
+        <button class="mat-btn">Buka →</button>
+      </div>
+    </div>`).join('');
+}
+
+// ─── MOBILE NAV ──────────────────────────────────────────────────────────
+function toggleNav(){document.getElementById('navMenu').classList.toggle('open')}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+document.getElementById('sSubj').textContent=SUBJECTS.length-1;
+document.getElementById('sMat').textContent=MATERIALS.length;
+renderSubjects();
+renderMaterials();
+</script>
+</body>
+</html>
