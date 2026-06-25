@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Bahan Pembelajaran — ETE KV Setapak</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0e2d4a;--navy2:#16456e;--teal:#0b7a6a;--gold:#e8830a;
+  --green:#1a4d2e;--green2:#256040;
+  --bg:#f3f6fa;--text:#0e2d4a;--muted:#6b7c93;--border:#e4ecf5;
+  --radius:12px;--shadow:0 2px 12px rgba(14,45,74,.08);
+  --shadow-hover:0 8px 28px rgba(14,45,74,.14);--red:#dc2626;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* ── PAGES ── */
+.page{display:none}.page.active{display:block}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:var(--green);height:66px;display:flex;align-items:center;padding:0 2rem;gap:2rem;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;cursor:pointer}
+.nav-logo-box{width:38px;height:38px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.nav-brand-text{color:#fff;font-size:15px;font-weight:700;line-height:1.2}
+.nav-brand-text span{display:block;font-size:11px;font-weight:400;opacity:.65;margin-top:1px}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.nav-admin-btn{background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);font-weight:600;padding:8px 16px;border:1px solid rgba(255,255,255,.2);border-radius:7px;cursor:pointer;font-family:inherit;font-size:13px;transition:all .2s}
+.nav-admin-btn:hover{background:rgba(255,255,255,.22)}
+.nav-admin-btn.logout{background:#dc2626;border-color:#dc2626}
+.nav-view-btn{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);padding:8px 14px;border:1px solid rgba(255,255,255,.15);border-radius:7px;cursor:pointer;font-family:inherit;font-size:13px;transition:all .2s}
+.nav-view-btn:hover{background:rgba(255,255,255,.15)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--green) 0%,var(--green2) 55%,#c8922a 100%);padding:72px 2rem 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-block;background:rgba(200,146,42,.25);color:#fbbf4e;border:1px solid rgba(200,146,42,.4);padding:5px 18px;border-radius:30px;font-size:11.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:22px;position:relative}
+.hero h1{font-size:2.5rem;font-weight:800;color:#fff;line-height:1.18;margin-bottom:14px;position:relative}
+.hero h1 span{color:#fbbf4e}
+.hero p{font-size:1rem;color:rgba(255,255,255,.82);max-width:560px;margin:0 auto 38px;position:relative}
+.search-wrap{max-width:540px;margin:0 auto;display:flex;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.22);position:relative}
+.search-wrap input{flex:1;border:none;outline:none;padding:14px 20px;font-family:inherit;font-size:14px;color:var(--text)}
+.search-wrap input::placeholder{color:#aab4c2}
+.search-wrap button{background:var(--gold);border:none;padding:0 24px;color:#fff;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer;transition:background .2s;white-space:nowrap}
+.search-wrap button:hover{background:#f59820}
+
+/* ── STATS BAR ── */
+.stats-bar{background:#fff;border-bottom:1px solid var(--border)}
+.stats-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.stat{padding:20px 16px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat .num{font-size:1.9rem;font-weight:800;color:var(--navy)}
+.stat .lbl{font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+
+/* ── FEATURED VIDEO ── */
+.featured-section{background:#111d13;padding:44px 24px;display:none}
+.featured-section.has-video{display:block}
+.featured-inner{max-width:820px;margin:0 auto}
+.featured-bar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.featured-bar-accent{width:4px;height:28px;background:#c8922a;border-radius:4px;flex-shrink:0}
+.featured-title{font-size:20px;font-weight:800;color:#fff;margin:0}
+.featured-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.featured-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.featured-desc{color:rgba(255,255,255,.55);font-size:14px;margin-top:14px;line-height:1.7}
+
+/* ── VIDEO BENGKEL ── */
+.vb-section{margin-bottom:3rem;background:#fff;border-radius:16px;padding:28px 28px 24px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.vb-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.vb-hd-left{display:flex;align-items:center;gap:14px}
+.vb-accent{width:4px;height:38px;background:var(--red);border-radius:4px;flex-shrink:0}
+.vb-title{font-size:1.3rem;font-weight:800;color:var(--navy);margin:0 0 3px}
+.vb-sub{font-size:12.5px;color:var(--muted);margin:0}
+.vb-count{background:#fde8e8;color:#991b1b;font-size:11.5px;font-weight:700;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.vb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem}
+.vb-empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:#bbb}
+.vb-empty-ico{font-size:40px;margin-bottom:10px}
+.vb-empty p{font-size:13px;line-height:1.7}
+/* video card */
+.vb-card{background:var(--bg);border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:all .22s;cursor:pointer}
+.vb-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);border-color:transparent;background:#fff}
+.vb-thumb{position:relative;width:100%;padding-bottom:56.25%;background:#111d13;overflow:hidden}
+.vb-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.vb-card:hover .vb-thumb img{transform:scale(1.04)}
+.vb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.22);transition:background .2s}
+.vb-card:hover .vb-play{background:rgba(0,0,0,.36)}
+.vb-play-btn{width:48px;height:48px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.35)}
+.vb-play-btn::after{content:'';border-style:solid;border-width:8px 0 8px 16px;border-color:transparent transparent transparent #fff;margin-left:3px}
+.vb-info{padding:13px 15px}
+.vb-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);margin-bottom:4px}
+.vb-name{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:4px}
+.vb-desc-text{font-size:12px;color:var(--muted);line-height:1.55}
+.vb-foot{padding:10px 15px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.vb-date{font-size:11px;color:#bbb}
+.vb-open{background:var(--red);color:#fff;border:none;padding:5px 13px;border-radius:7px;font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s}
+.vb-open:hover{background:#b91c1c}
+
+/* ── MAIN ── */
+.main{max-width:1080px;margin:0 auto;padding:3rem 1.5rem}
+.sec-hd{margin-bottom:1.5rem}
+.sec-hd h2{font-size:1.45rem;font-weight:800;color:var(--navy)}
+.sec-hd p{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* ── BATCH TABS ── */
+.batch-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.batch-tab{padding:7px 18px;border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--muted);transition:all .15s}
+.batch-tab:hover{border-color:var(--green);color:var(--green)}
+.batch-tab.active{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ── BATCH GROUP ── */
+.batch-group{margin-bottom:36px}
+.batch-label-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.batch-pill{background:var(--green);color:#fff;font-size:13px;font-weight:700;padding:4px 16px;border-radius:20px;flex-shrink:0}
+.batch-line{flex:1;height:1px;background:#e0dbd4}
+.batch-count{font-size:12px;color:#bbb;flex-shrink:0}
+
+/* ── SUBJECT CARDS ── */
+.subj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px}
+.subj-card{background:#fff;border:2px solid transparent;border-radius:16px;padding:22px 18px;cursor:pointer;text-align:left;transition:all .22s;box-shadow:0 2px 10px rgba(0,0,0,.06);position:relative}
+.subj-card:hover{transform:translateY(-3px)}
+.subj-card-emoji{font-size:34px;margin-bottom:10px}
+.subj-card-name{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+.subj-card-count{font-size:12px;color:#aaa;margin-bottom:12px}
+.subj-card-bar{height:3px;width:36px;border-radius:3px}
+.empty-state{text-align:center;padding:80px 20px;color:#bbb}
+.empty-state .e-ico{font-size:52px;margin-bottom:16px}
+.empty-state h3{font-size:16px;font-weight:700;color:#333;margin-bottom:8px}
+.empty-state p{font-size:13px}
+
+/* ── SUBJECT PAGE ── */
+#subjectPage .subj-header{background:var(--bg);border-bottom:3px solid var(--border);padding:24px}
+#subjectPage .subj-header-inner{max-width:780px;margin:0 auto}
+#subjectPage .subj-header h1{font-size:24px;font-weight:800;color:#111;margin-bottom:4px}
+#subjectPage .subj-header p{font-size:13px;color:#999}
+.subj-main{max-width:780px;margin:0 auto;padding:28px 20px}
+.mat-item{background:#fff;border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:16px}
+.mat-type-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px}
+.mat-item h3{font-size:18px;font-weight:700;color:#111;margin-bottom:12px}
+.mat-link-btn{display:inline-flex;align-items:center;gap:6px;color:#fff;padding:9px 16px;border-radius:9px;font-size:13px;text-decoration:none;font-weight:600;margin-bottom:10px}
+.mat-yt-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin-bottom:12px}
+.mat-yt-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.mat-notes{font-size:14px;color:#555;padding:10px 14px;border-radius:8px;border-left:3px solid;line-height:1.7;white-space:pre-wrap;margin-top:8px}
+.mat-date{font-size:11px;color:#ccc;margin-left:8px}
+
+/* ── LOGIN PAGE ── */
+.login-page{min-height:100vh;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;border-radius:20px;padding:40px 36px;width:100%;max-width:380px;box-shadow:0 8px 40px rgba(0,0,0,.09)}
+.login-box .lb-icon{font-size:44px;text-align:center;display:block;margin-bottom:12px}
+.login-box h2{font-size:22px;font-weight:800;color:#111;text-align:center;margin-bottom:6px}
+.login-box .lb-sub{font-size:13px;color:#999;text-align:center;margin-bottom:28px;line-height:1.5}
+.lbl{display:block;font-size:12px;font-weight:700;color:#666;margin-bottom:5px}
+.inp{display:block;width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;box-sizing:border-box;margin-bottom:12px}
+.inp:focus{border-color:var(--green)}
+.inp.err{border-color:var(--red)}
+.inp-err{font-size:12.5px;color:var(--red);margin-top:-8px;margin-bottom:10px}
+.btn-green{background:var(--green);color:#fff;border:none;padding:11px 20px;border-radius:9px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;width:100%;margin-bottom:10px}
+.btn-green:hover{background:var(--green2)}
+.btn-white{background:#fff;color:#333;border:1.5px solid var(--border);padding:10px 20px;border-radius:9px;font-family:inherit;font-size:14px;cursor:pointer;transition:all .2s;width:100%}
+.btn-white:hover{border-color:#999;color:#111}
+.login-hint{margin-top:18px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;font-size:12px;color:#555;text-align:center}
+
+/* ── ADMIN LAYOUT ── */
+.admin-wrap{display:flex;max-width:1080px;margin:0 auto;padding:20px 16px;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.admin-sidebar{width:240px;flex-shrink:0;min-width:190px}
+.admin-main{flex:1;min-width:280px}
+
+/* ADMIN CARD */
+.a-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 1px 8px rgba(0,0,0,.07);margin-bottom:12px}
+.a-card-title{font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+
+/* TABS */
+.admin-tabs{display:flex;gap:4px;margin-bottom:16px;background:#fff;border-radius:10px;padding:4px;width:fit-content;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.admin-tab{padding:7px 16px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;border:none;transition:all .15s;background:transparent;color:#777}
+.admin-tab.active{background:var(--green);color:#fff}
+.admin-tab:hover:not(.active){background:#f0f0f0;color:#333}
+
+/* SUBJECT LIST IN SIDEBAR */
+.subj-list-item{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;cursor:pointer;margin-bottom:3px;border:1.5px solid transparent;transition:all .15s}
+.subj-list-item.active{background:#e8f5ee;border-color:rgba(26,77,46,.35)}
+.subj-list-item:hover:not(.active){background:#f5f5f5}
+.subj-list-emoji{font-size:16px;flex-shrink:0}
+.subj-list-info{flex:1;min-width:0}
+.subj-list-name{font-size:13px;font-weight:500;color:#222;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.subj-list-sub{font-size:10px;color:#bbb}
+.subj-list-count{font-size:11px;color:#bbb;min-width:14px;text-align:right}
+.subj-del-btn{background:none;border:none;cursor:pointer;color:#ddd;font-size:20px;line-height:1;padding:0 2px;flex-shrink:0;transition:color .15s}
+.subj-del-btn:hover{color:var(--red)}
+
+/* ADD FORMS */
+.add-form{background:#fff;border:2px dashed #86efac;border-radius:14px;padding:18px;margin-bottom:12px}
+.add-form-title{font-size:13px;font-weight:700;margin-bottom:14px;color:#333}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-sm-green{background:#f0fdf4;color:#16a34a;border:1px solid #86efac;padding:5px 12px;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:700;font-family:inherit;transition:all .15s}
+.btn-sm-green:hover{background:#dcfce7}
+.btn-red-sm{background:#fef2f2;color:var(--red);border:1px solid #fecaca;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:700;font-family:inherit}
+.btn-red-sm:hover{background:#fee2e2}
+.btn-outline-sm{background:#fff;color:#333;border:1.5px solid var(--border);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit}
+.btn-outline-sm:hover{border-color:#999}
+
+/* MATERIAL ITEMS IN ADMIN */
+.admin-mat-item{background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,.06);margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.admin-mat-body{flex:1;min-width:0}
+.admin-mat-type{font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:5px}
+.admin-mat-title{font-size:14px;font-weight:700;color:#111;margin-bottom:3px}
+.admin-mat-url{font-size:11.5px;color:#aaa;word-break:break-all}
+.admin-mat-notes{font-size:12.5px;color:#666;margin-top:4px}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:13px 22px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:#059669}
+.toast.error{background:var(--red)}
+
+/* FOOTER */
+footer{background:var(--green);color:#fff;margin-top:5rem;padding:2.5rem 2rem}
+.footer-inner{max-width:1080px;margin:0 auto;text-align:center;font-size:13px;opacity:.65}
+
+/* SEARCH HIGHLIGHT */
+.hl{background:#fef08a;border-radius:3px;padding:0 2px}
+
+/* PASS MSG */
+.pass-msg{font-size:12.5px;margin-top:6px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.vb-card{animation:fadeUp .3s ease both}
+
+@media(max-width:700px){
+  .admin-wrap{flex-direction:column}
+  .admin-sidebar{width:100%}
+  .hero h1{font-size:1.9rem}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero{padding:50px 1.2rem 44px}
+  .login-box{padding:28px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME PAGE ══════════════════════════════════════════════ -->
+<div id="homePage" class="page active">
+  <nav>
+    <div class="nav-brand" onclick="showPage('home')">
+      <div class="nav-logo-box">🎓</div>
+      <div class="nav-brand-text">ETE KV Setapak<span>Portal Bahan Pembelajaran</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-admin-btn" id="navAdminBtn" onclick="handleAdminNav()">🔐 Admin</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">Portal Rasmi ETE KV Setapak</div>
+    <h1>Selamat Datang, <span>Pelajar! 👋</span></h1>
+    <p>Pilih subjek untuk akses nota, video pengajaran, pautan, dan bahan rujukan — bebas tanpa log masuk.</p>
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Cari subjek atau bahan..." oninput="onSearch()">
+      <button onclick="onSearch()">🔍 Cari</button>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat"><div class="num" id="statSubj">0</div><div class="lbl">Subjek Tersedia</div></div>
+      <div class="stat"><div class="num" id="statMat">0</div><div class="lbl">Bahan Pembelajaran</div></div>
+      <div class="stat"><div class="num" id="statVid">0</div><div class="lbl">Video Bengkel</div></div>
+      <div class="stat"><div class="num">24/7</div><div class="lbl">Akses Percuma</div></div>
+    </div>
+  </div>
+
+  <!-- Featured Video -->
+  <div class="featured-section" id="featuredSection">
+    <div class="featured-inner">
+      <div class="featured-bar">
+        <div class="featured-bar-accent"></div>
+        <h2 class="featured-title" id="featuredTitle">Video Utama</h2>
+      </div>
+      <div class="featured-embed">
+        <iframe id="featuredIframe" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+      <p class="featured-desc" id="featuredDesc"></p>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <!-- ── VIDEO BENGKEL ── -->
+    <div class="vb-section" id="vbSection">
+      <div class="vb-hd">
+        <div class="vb-hd-left">
+          <div class="vb-accent"></div>
+          <div>
+            <h2 class="vb-title">🎬 Video Bengkel</h2>
+            <p class="vb-sub">Video bengkel dan penerangan khas daripada guru — tonton terus di sini</p>
+          </div>
+        </div>
+        <span class="vb-count" id="vbCount">0 video</span>
+      </div>
+      <div id="vbGrid" class="vb-grid">
+        <div class="vb-empty" id="vbEmpty">
+          <div class="vb-empty-ico">🎬</div>
+          <p>Tiada video bengkel buat masa ini.<br>Admin boleh tambah melalui Panel Admin.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-hd">
+      <h2>📚 Pilih Subjek</h2>
+      <p>Klik pada subjek untuk lihat semua bahan pembelajaran</p>
+    </div>
+
+    <!-- Batch Filter Tabs -->
+    <div class="batch-tabs" id="batchTabs"></div>
+
+    <!-- Subject Grid Area -->
+    <div id="subjArea"></div>
+  </main>
+
+  <footer><div class="footer-inner">ETE KV Setapak • Portal Bahan Pembelajaran • Akses bebas untuk semua pelajar</div></footer>
+</div>
+
+<!-- ══ SUBJECT PAGE ══════════════════════════════════════════ -->
+<div id="subjectPage" class="page">
+  <nav>
+    <button class="nav-admin-btn" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)" onclick="showPage('home')">← Balik</button>
+    <div class="nav-brand-text" id="subjPageTitle" style="color:#fff;font-size:16px;font-weight:700;margin-left:4px"></div>
+    <div class="nav-right">
+      <button class="nav-admin-btn" id="navAdminBtn2" onclick="handleAdminNav()">🔐 Admin</button>
+    </div>
+  </nav>
+  <div id="subjectPageInner"></div>
+</div>
+
+<!-- ══ LOGIN PAGE ══════════════════════════════════════════════ -->
+<div id="loginPage" class="page">
+  <nav>
+    <div class="nav-brand" onclick="showPage('home')">
+      <div class="nav-logo-box">🎓</div>
+      <div class="nav-brand-text">ETE KV Setapak<span>Portal Bahan Pembelajaran</span></div>
+    </div>
+  </nav>
+  <div class="login-page">
+    <div class="login-box">
+      <span class="lb-icon">🔐</span>
+      <h2>Log Masuk Admin</h2>
+      <p class="lb-sub">Masukkan kata laluan untuk urus kandungan portal</p>
+      <label class="lbl">Kata Laluan</label>
+      <input type="password" id="loginPassInput" class="inp" placeholder="Masukkan kata laluan..."
+        onkeydown="if(event.key==='Enter')doLogin()" oninput="document.getElementById('loginErrMsg').style.display='none'">
+      <div id="loginErrMsg" style="display:none" class="inp-err">❌ Kata laluan tidak betul. Cuba lagi.</div>
+      <button class="btn-green" onclick="doLogin()">Masuk →</button>
+      <button class="btn-white" onclick="showPage('home')">← Kembali ke Laman Utama</button>
+      <div class="login-hint">💡 Kata laluan lalai: <strong>AdminETE123</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PAGE ══════════════════════════════════════════════ -->
+<div id="adminPage" class="page">
+  <nav>
+    <div class="nav-brand" onclick="showPage('home')">
+      <div class="nav-logo-box">🎓</div>
+      <div class="nav-brand-text">ETE KV Setapak<span>Panel Pentadbir</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-view-btn" onclick="showPage('home')">👁️ Lihat Laman</button>
+      <button class="nav-admin-btn logout" onclick="adminLogout()">Log Keluar</button>
+    </div>
+  </nav>
+
+  <div class="admin-wrap">
+    <!-- SIDEBAR -->
+    <div class="admin-sidebar">
+
+      <!-- School Name -->
+      <div class="a-card">
+        <div class="a-card-title">Nama Sekolah</div>
+        <div id="schoolNameDisplay" style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px;font-weight:700;color:#222" id="schoolNameText"></span>
+          <button onclick="startEditName()" style="font-size:12px;background:none;border:none;color:var(--green);cursor:pointer;font-weight:700">Edit</button>
+        </div>
+        <div id="schoolNameEdit" style="display:none">
+          <input id="schoolNameInp" class="inp" style="margin-top:8px">
+          <div style="display:flex;gap:6px">
+            <button class="btn-green" style="flex:1;padding:7px" onclick="saveSchoolName()">Simpan</button>
+            <button class="btn-white" style="flex:1;padding:7px" onclick="cancelEditName()">Batal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject List -->
+      <div class="a-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div class="a-card-title" style="margin-bottom:0">Senarai Subjek</div>
+          <button class="btn-sm-green" onclick="toggleAddSubjForm()">+ Tambah</button>
+        </div>
+        <div id="adminSubjList"></div>
+      </div>
+
+      <!-- Add Subject Form -->
+      <div class="add-form" id="addSubjForm" style="display:none">
+        <div class="add-form-title">➕ Tambah Subjek Baru</div>
+        <label class="lbl">Nama Subjek</label>
+        <input id="newSubjName" class="inp" placeholder="cth: Fizik, Kimia...">
+        <label class="lbl">Batch (ETE)</label>
+        <select id="newSubjETE" class="inp" style="background:#fff;cursor:pointer">
+          <option value="1">ETE 1</option><option value="2">ETE 2</option><option value="3">ETE 3</option>
+          <option value="4">ETE 4</option><option value="5">ETE 5</option><option value="6">ETE 6</option>
+        </select>
+        <div class="form-row">
+          <div>
+            <label class="lbl">Emoji</label>
+            <input id="newSubjEmoji" class="inp" placeholder="📚" maxlength="4" style="text-align:center">
+          </div>
+          <div>
+            <label class="lbl">Warna</label>
+            <input type="color" id="newSubjColor" class="inp" style="padding:4px;height:40px" value="#1e40af">
+          </div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn-green" style="flex:1;padding:8px;font-size:13px" onclick="addSubject()">Simpan</button>
+          <button class="btn-white" style="flex:1;padding:8px;font-size:13px" onclick="toggleAddSubjForm()">Batal</button>
+        </div>
+      </div>
+
+      <!-- Change Password -->
+      <div class="a-card">
+        <div class="a-card-title">🔑 Tukar Kata Laluan</div>
+        <label class="lbl">Kata Laluan Lama</label>
+        <input type="password" id="oldPassInp" class="inp" placeholder="Lama...">
+        <label class="lbl">Kata Laluan Baru</label>
+        <input type="password" id="newPassInp" class="inp" placeholder="Baru...">
+        <button class="btn-green" style="padding:8px" onclick="changePass()">Tukar Kata Laluan</button>
+        <div id="passMsg" class="pass-msg"></div>
+      </div>
+    </div>
+
+    <!-- MAIN AREA -->
+    <div class="admin-main">
+      <div class="admin-tabs">
+        <button class="admin-tab active" id="tabBtnMat" onclick="switchAdminTab('materials')">📚 Bahan Subjek</button>
+        <button class="admin-tab" id="tabBtnVid" onclick="switchAdminTab('video')">🎬 Video Utama</button>
+        <button class="admin-tab" id="tabBtnSudut" onclick="switchAdminTab('sudut')">🎬 Video Bengkel</button>
+      </div>
+
+      <!-- TAB: MATERIALS -->
+      <div id="adminTabMat">
+        <div id="adminMatArea"></div>
+      </div>
+
+      <!-- TAB: VIDEO UTAMA -->
+      <div id="adminTabVid" style="display:none">
+        <div class="a-card">
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:22px">
+            <div style="width:46px;height:46px;background:#111d13;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🎬</div>
+            <div>
+              <div style="font-size:17px;font-weight:800;color:#111;margin-bottom:4px">Video Utama Laman</div>
+              <p style="font-size:13px;color:#888;line-height:1.5">Video ini dipaparkan secara menonjol di bahagian atas halaman utama untuk semua pelajar.</p>
+            </div>
+          </div>
+          <label class="lbl">Tajuk Video</label>
+          <input id="vidTitle" class="inp" placeholder="cth: Ucapan Pengetua, Taklimat Peperiksaan...">
+          <label class="lbl">URL YouTube</label>
+          <input id="vidUrl" class="inp" placeholder="https://www.youtube.com/watch?v=..." oninput="updateVidPreview()">
+          <label class="lbl">Penerangan (pilihan)</label>
+          <textarea id="vidDesc" class="inp" style="min-height:70px;resize:vertical" rows="3" placeholder="Penerangan ringkas tentang video ini..."></textarea>
+          <div id="vidPreviewWrap" style="display:none;margin-bottom:16px">
+            <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px">📺 Pratonton:</div>
+            <div style="position:relative;padding-bottom:40%;height:0;overflow:hidden;border-radius:10px">
+              <iframe id="vidPreviewFrame" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-green" style="flex:1" id="saveFeaturedBtn" onclick="saveFeaturedVideo()">💾 Simpan & Papar di Laman Utama</button>
+            <button class="btn-red-sm" id="clearFeaturedBtn" onclick="clearFeaturedVideo()" style="display:none">🗑️ Buang</button>
+          </div>
+          <div id="featuredStatus" style="margin-top:14px;border-radius:8px;padding:10px 14px;font-size:12.5px"></div>
+        </div>
+      </div>
+      <!-- TAB: SUDUT VIDEO -->
+      <div id="adminTabSudut" style="display:none">
+        <div class="a-card">
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:22px">
+            <div style="width:46px;height:46px;background:#1a1a2e;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">▶️</div>
+            <div>
+              <div style="font-size:17px;font-weight:800;color:#111;margin-bottom:4px">Urus Video Bengkel</div>
+              <p style="font-size:13px;color:#888;line-height:1.5">Tambah video YouTube untuk dipaparkan dalam seksyen "Video Bengkel" di laman utama. Pelajar boleh tonton terus dalam portal.</p>
+            </div>
+          </div>
+          <!-- Add Video Form -->
+          <div style="background:#f8fafc;border:1.5px dashed var(--border);border-radius:12px;padding:18px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;color:#333;margin-bottom:14px">➕ Tambah Video Baru</div>
+            <div class="form-row">
+              <div>
+                <label class="lbl">Tajuk Video *</label>
+                <input id="svTitle" class="inp" placeholder="cth: Bengkel Matematik T4 Sesi 1...">
+              </div>
+              <div>
+                <label class="lbl">Label (pilihan)</label>
+                <input id="svETE" class="inp" placeholder="cth: ETE 3, Sesi 2, Bengkel SPM...">
+              </div>
+            </div>
+            <label class="lbl">URL YouTube *</label>
+            <input id="svUrl" class="inp" placeholder="https://www.youtube.com/watch?v=..." oninput="updateSudutPreview()">
+            <div id="svUrlHint" style="font-size:11.5px;margin-top:-8px;margin-bottom:10px;min-height:16px"></div>
+            <label class="lbl">Penerangan Ringkas (pilihan)</label>
+            <textarea id="svDesc" class="inp" style="min-height:60px;resize:vertical" rows="2" placeholder="Isi kandungan video ini..."></textarea>
+            <div id="svPreviewWrap" style="display:none;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:6px">📺 Pratonton:</div>
+              <div style="position:relative;padding-bottom:38%;height:0;overflow:hidden;border-radius:9px">
+                <iframe id="svPreviewFrame" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen></iframe>
+              </div>
+            </div>
+            <button class="btn-green" style="padding:9px 20px;font-size:13px;width:auto" onclick="addSudutVideo()">▶️ Tambah Video</button>
+          </div>
+          <!-- Video List -->
+          <div id="sudutVidList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STORAGE KEY ──────────────────────────────────────────────
+const SK = 'ETE_KV_Setapak_Portal';
+
+// ── DEFAULT DATA ─────────────────────────────────────────────
+const DEFAULTS = {
+  schoolName: 'ETE KV Setapak',
+  adminPass:  'AdminETE123',
+  featuredVideo: { title:'', url:'', description:'' },
+  sudutVideos: [],
+  subjects: [
+    {id:'s1',name:'Matematik',     emoji:'📐',color:'#1e40af',ete:'1'},
+    {id:'s2',name:'Bahasa Melayu', emoji:'📖',color:'#15803d',ete:'1'},
+    {id:'s3',name:'Sains',         emoji:'🔬',color:'#7c3aed',ete:'2'},
+    {id:'s4',name:'Bahasa Inggeris',emoji:'🌐',color:'#b45309',ete:'2'},
+    {id:'s5',name:'Sejarah',       emoji:'🏛️',color:'#9f1239',ete:'3'},
+    {id:'s6',name:'Geografi',      emoji:'🗺️',color:'#0f766e',ete:'3'},
+  ],
+  materials: {},
+};
+
+const TYPE_CFG = {
+  video: {label:'Video YouTube', icon:'🎬', color:'#1d4ed8'},
+  file:  {label:'Fail / Dokumen', icon:'📄', color:'#7c3aed'},
+  link:  {label:'Pautan Luar',    icon:'🔗', color:'#0f766e'},
+  note:  {label:'Nota Teks',      icon:'📝', color:'#b45309'},
+};
+
+// ── STATE ────────────────────────────────────────────────────
+let D = JSON.parse(JSON.stringify(DEFAULTS));
+let adminSelSubjId = null;
+let curPage = 'home';
+let curSubjId = null;
+let activeBatch = 'semua';
+let adminTab = 'materials';
+let addSubjOpen = false;
+let addMatOpen  = false;
+
+// ── PERSISTENCE ──────────────────────────────────────────────
+function save() {
+  try { localStorage.setItem(SK, JSON.stringify(D)); } catch(e){}
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(SK);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      D = {
+        ...DEFAULTS, ...saved,
+        subjects: (saved.subjects||[]).map(s=>({...s, ete: s.ete||s.ETE||'1'})),
+        featuredVideo: saved.featuredVideo || DEFAULTS.featuredVideo,
+        sudutVideos: saved.sudutVideos || [],
+        materials: saved.materials || {},
+      };
+    }
+  } catch(e){ D = JSON.parse(JSON.stringify(DEFAULTS)); }
+}
+
+// ── HELPERS ──────────────────────────────────────────────────
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function ytId(url){
+  const m=(url||'').match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/);
+  return m?m[1]:null;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+let toastTimer;
+function showToast(msg, type=''){
+  const t=document.getElementById('toast');
+  clearTimeout(toastTimer);
+  t.textContent=msg; t.className='toast '+(type||''); t.classList.add('show');
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── PAGE ROUTING ─────────────────────────────────────────────
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById({home:'homePage',subject:'subjectPage',login:'loginPage',admin:'adminPage'}[name]).classList.add('active');
+  curPage=name;
+  if(name==='home') renderHome();
+  if(name==='admin') renderAdmin();
+  window.scrollTo(0,0);
+}
+
+function handleAdminNav(){
+  if(curPage==='admin'){ adminLogout(); return; }
+  showPage('login');
+  document.getElementById('loginPassInput').value='';
+  document.getElementById('loginErrMsg').style.display='none';
+  setTimeout(()=>document.getElementById('loginPassInput').focus(),100);
+}
+
+// ── AUTH ─────────────────────────────────────────────────────
+function doLogin(){
+  const v=document.getElementById('loginPassInput').value;
+  if(v===D.adminPass){
+    document.getElementById('loginErrMsg').style.display='none';
+    showPage('admin');
+    document.getElementById('navAdminBtn').textContent='🚪 Log Keluar';
+  } else {
+    document.getElementById('loginErrMsg').style.display='block';
+    document.getElementById('loginPassInput').value='';
+  }
+}
+function adminLogout(){
+  showPage('home');
+  document.getElementById('navAdminBtn').textContent='🔐 Admin';
+  document.getElementById('navAdminBtn2').textContent='🔐 Admin';
+}
+
+// ── HOME RENDER ──────────────────────────────────────────────
+function renderHome(){
+  const {subjects, materials, featuredVideo} = D;
+
+  // Stats
+  const totalMat = Object.values(materials).flat().length;
+  document.getElementById('statSubj').textContent = subjects.length;
+  document.getElementById('statMat').textContent  = totalMat;
+  // statVid updated inside renderSudutVideoGrid()
+
+  // Featured video
+  const ytid = ytId(featuredVideo?.url||'');
+  const fs = document.getElementById('featuredSection');
+  if(ytid){
+    fs.classList.add('has-video');
+    document.getElementById('featuredTitle').textContent = featuredVideo.title || 'Video Utama';
+    document.getElementById('featuredIframe').src = 'https://www.youtube.com/embed/'+ytid;
+    const desc = document.getElementById('featuredDesc');
+    desc.textContent = featuredVideo.description||'';
+    desc.style.display = featuredVideo.description ? 'block':'none';
+  } else {
+    fs.classList.remove('has-video');
+    document.getElementById('featuredIframe').src='';
+  }
+
+  // Sudut Video grid
+  renderSudutVideoGrid();
+
+  // Batch tabs
+  const batches = [...new Set(subjects.map(s=>s.ete||'1'))].sort();
+  const tabsEl = document.getElementById('batchTabs');
+  tabsEl.innerHTML = ['semua',...batches].map(b=>`
+    <button class="batch-tab${activeBatch===b?' active':''}" onclick="setBatch('${b}')">
+      ${b==='semua'?'Semua':'Batch '+b}
+    </button>`).join('');
+
+  renderSubjectGrid();
+}
+
+function setBatch(b){ activeBatch=b; renderHome(); }
+
+function renderSubjectGrid(){
+  const {subjects, materials} = D;
+  const q = (document.getElementById('searchInput')?.value||'').toLowerCase().trim();
+  const el = document.getElementById('subjArea');
+
+  let filtered = activeBatch==='semua' ? subjects : subjects.filter(s=>(s.ete||'1')===activeBatch);
+  if(q) filtered = filtered.filter(s=>s.name.toLowerCase().includes(q));
+
+  if(subjects.length===0){
+    el.innerHTML=`<div class="empty-state"><div class="e-ico">📭</div><h3>Tiada Subjek</h3><p>Admin perlu tambah subjek terlebih dahulu.</p></div>`;
+    return;
+  }
+
+  if(activeBatch==='semua' && !q){
+    // grouped view
+    const batches=[...new Set(subjects.map(s=>s.ete||'1'))].sort();
+    el.innerHTML = batches.map(b=>{
+      const list=subjects.filter(s=>(s.ete||'1')===b);
+      if(!list.length) return '';
+      return `<div class="batch-group">
+        <div class="batch-label-row">
+          <div class="batch-pill">ETE ${esc(b)}</div>
+          <div class="batch-line"></div>
+          <span class="batch-count">${list.length} subjek</span>
+        </div>
+        <div class="subj-grid">${list.map(s=>subjCardHTML(s)).join('')}</div>
+      </div>`;
+    }).join('');
+  } else {
+    if(!filtered.length){
+      el.innerHTML=`<div class="empty-state"><div class="e-ico">🔍</div><h3>Tiada hasil carian</h3><p>Cuba cari dengan nama lain.</p></div>`;
+      return;
+    }
+    el.innerHTML=`<div class="subj-grid">${filtered.map(s=>subjCardHTML(s)).join('')}</div>`;
+  }
+}
+
+function subjCardHTML(s){
+  const cnt=(D.materials[s.id]||[]).length;
+  return `<div class="subj-card" onclick="openSubject('${s.id}')"
+    onmouseenter="this.style.borderColor='${s.color}';this.style.boxShadow='0 10px 28px ${s.color}28'"
+    onmouseleave="this.style.borderColor='transparent';this.style.boxShadow='0 2px 10px rgba(0,0,0,.06)'">
+    <div class="subj-card-emoji">${esc(s.emoji)}</div>
+    <div class="subj-card-name">${esc(s.name)}</div>
+    <div class="subj-card-count">${cnt} bahan tersedia</div>
+    <div class="subj-card-bar" style="background:${s.color}"></div>
+  </div>`;
+}
+
+function onSearch(){ renderHome(); }
+
+// ── VIDEO BENGKEL GRID (front page) ──────────────────────────
+function renderSudutVideoGrid(){
+  const vids = D.sudutVideos || [];
+  const grid  = document.getElementById('vbGrid');
+  const count = document.getElementById('vbCount');
+  const empty = document.getElementById('vbEmpty');
+
+  count.textContent = vids.length + (vids.length===1?' video':' video');
+  document.getElementById('statVid').textContent = vids.length;
+
+  if(!vids.length){
+    grid.innerHTML = `<div class="vb-empty"><div class="vb-empty-ico">🎬</div>
+      <p>Tiada video bengkel buat masa ini.<br>Admin boleh tambah melalui Panel Admin.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = vids.map((v,i)=>{
+    const id = ytId(v.url);
+    const thumb = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
+    return `<div class="vb-card" style="animation-delay:${i*0.06}s">
+      <div class="vb-thumb" onclick="playVbInline(this,'${id||''}')">
+        ${thumb?`<img src="${thumb}" alt="${esc(v.title)}" loading="lazy" onerror="this.style.display='none'">`:''}
+        <div class="vb-play"><div class="vb-play-btn"></div></div>
+      </div>
+      <div class="vb-info">
+        ${v.label?`<div class="vb-label">${esc(v.label)}</div>`:'<div class="vb-label">Video Bengkel</div>'}
+        <div class="vb-name">${esc(v.title)}</div>
+        ${v.desc?`<div class="vb-desc-text">${esc(v.desc)}</div>`:''}
+      </div>
+      <div class="vb-foot">
+        <span class="vb-date">${v.addedAt||''}</span>
+        <a href="${esc(v.url)}" target="_blank" rel="noopener" class="vb-open">YouTube ↗</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function playVbInline(thumbEl, id){
+  if(!id) return;
+  const wrap = thumbEl.closest('.vb-thumb');
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+  iframe.allow = 'accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+  iframe.allowFullscreen = true;
+  iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none';
+  wrap.innerHTML = '';
+  wrap.appendChild(iframe);
+}
+
+// ── ADMIN: SUDUT VIDEO ────────────────────────────────────────
+function updateSudutPreview(){
+  const url = document.getElementById('svUrl')?.value||'';
+  const id  = ytId(url);
+  const hint  = document.getElementById('svUrlHint');
+  const wrap  = document.getElementById('svPreviewWrap');
+  const frame = document.getElementById('svPreviewFrame');
+  if(id){
+    hint.style.color='var(--teal)'; hint.textContent='✅ Video dijumpai! ID: '+id;
+    frame.src='https://www.youtube.com/embed/'+id;
+    wrap.style.display='block';
+  } else {
+    hint.style.color='var(--red)'; hint.textContent = url?'❌ Pautan YouTube tidak sah':'';
+    wrap.style.display='none'; frame.src='';
+  }
+}
+
+function addSudutVideo(){
+  const title = document.getElementById('svTitle')?.value.trim();
+  const url   = document.getElementById('svUrl')?.value.trim();
+  const label = document.getElementById('svETE')?.value.trim();
+  const desc  = document.getElementById('svDesc')?.value.trim();
+  if(!title){ showToast('⚠️ Sila isi tajuk video','error'); return; }
+  if(!url||!ytId(url)){ showToast('❌ Pautan YouTube tidak sah','error'); return; }
+  if(!D.sudutVideos) D.sudutVideos=[];
+  D.sudutVideos.push({id:uid(), title, url, label, desc, addedAt:new Date().toLocaleDateString('ms-MY')});
+  ['svTitle','svUrl','svDesc'].forEach(el=>{ const e=document.getElementById(el); if(e) e.value=''; });
+  document.getElementById('svETE').value='';
+  document.getElementById('svPreviewWrap').style.display='none';
+  document.getElementById('svPreviewFrame').src='';
+  document.getElementById('svUrlHint').textContent='';
+  save(); renderSudutAdminList();
+  showToast('✅ Video bengkel ditambah!','success');
+}
+
+function deleteSudutVideo(id){
+  if(!confirm('Padam video bengkel ini?')) return;
+  D.sudutVideos=(D.sudutVideos||[]).filter(v=>v.id!==id);
+  save(); renderSudutAdminList();
+  showToast('🗑️ Video dipadam.','');
+}
+
+function renderSudutAdminList(){
+  const el=document.getElementById('sudutVidList');
+  if(!el) return;
+  const vids=D.sudutVideos||[];
+  if(!vids.length){
+    el.innerHTML=`<div style="text-align:center;padding:40px 20px;color:#ccc">
+      <div style="font-size:36px;margin-bottom:10px">🎬</div>
+      <p style="font-size:14px">Tiada video bengkel lagi. Tambah video di atas.</p></div>`;
+    return;
+  }
+  el.innerHTML=`<div style="font-size:12px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">${vids.length} Video Bengkel Tersimpan</div>`
+  +vids.map((v,i)=>{
+    const id=ytId(v.url);
+    return `<div style="display:flex;gap:12px;align-items:center;background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px">
+      ${id?`<img src="https://img.youtube.com/vi/${id}/default.jpg" style="width:72px;height:54px;object-fit:cover;border-radius:7px;flex-shrink:0" onerror="this.style.display='none'">`
+          :`<div style="width:72px;height:54px;background:#e0e0e0;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px">🎬</div>`}
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13.5px;font-weight:700;color:#111;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.title)}</div>
+        <div style="font-size:11px;color:#aaa">${v.label?esc(v.label)+' · ':''}${v.addedAt||''}</div>
+        <div style="font-size:11px;color:#bbb;word-break:break-all;margin-top:1px">${esc(v.url.slice(0,55))}${v.url.length>55?'...':''}</div>
+      </div>
+      <button class="btn-red-sm" style="flex-shrink:0;padding:6px 10px" onclick="deleteSudutVideo('${v.id}')">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+// ── SUBJECT PAGE ─────────────────────────────────────────────
+function openSubject(id){
+  curSubjId=id;
+  const s=D.subjects.find(x=>x.id===id);
+  if(!s) return;
+  const mats=D.materials[id]||[];
+  document.getElementById('subjPageTitle').textContent=s.emoji+' '+s.name;
+
+  let matsHTML='';
+  if(!mats.length){
+    matsHTML=`<div class="empty-state"><div class="e-ico">📂</div><h3>Tiada Bahan</h3><p>Tiada bahan untuk subjek ini buat masa ini.</p></div>`;
+  } else {
+    matsHTML=mats.map(m=>{
+      const tc=TYPE_CFG[m.type]||TYPE_CFG.note;
+      const vid=m.type==='video'?ytId(m.url):null;
+      return `<div class="mat-item">
+        <span class="mat-type-badge" style="background:${tc.color}18;color:${tc.color}">${tc.icon} ${tc.label}</span>
+        ${m.addedAt?`<span class="mat-date">${esc(m.addedAt)}</span>`:''}
+        <h3>${esc(m.title)}</h3>
+        ${m.type==='video'&&m.url?(vid
+          ?`<div class="mat-yt-embed"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"></iframe></div>`
+          :`<a href="${esc(m.url)}" target="_blank" rel="noopener" class="mat-link-btn" style="background:#1d4ed8">🎬 Buka Video →</a>`)
+        :''}
+        ${(m.type==='file'||m.type==='link')&&m.url
+          ?`<a href="${esc(m.url)}" target="_blank" rel="noopener" class="mat-link-btn" style="background:${tc.color}">${m.type==='file'?'📥 Buka / Muat Turun Fail':'🔗 Buka Pautan'} →</a>`
+        :''}
+        ${m.notes?`<div class="mat-notes" style="background:${s.color}0d;border-color:${s.color}">${esc(m.notes)}</div>`:''}
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('subjectPageInner').innerHTML=`
+    <div style="background:linear-gradient(120deg,${s.color}14,${s.color}06);border-bottom:3px solid ${s.color};padding:24px">
+      <div style="max-width:780px;margin:0 auto">
+        <h1 style="font-size:24px;font-weight:800;color:#111;margin-bottom:4px">${esc(s.emoji)} ${esc(s.name)}</h1>
+        <p style="font-size:13px;color:#999">${mats.length} bahan pembelajaran tersedia • ETE ${esc(s.ete||'1')}</p>
+      </div>
+    </div>
+    <div class="subj-main">${matsHTML}</div>`;
+
+  document.getElementById('navAdminBtn2').textContent = curPage==='admin'?'🚪 Log Keluar':'🔐 Admin';
+  showPage('subject');
+}
+
+// ── ADMIN RENDER ─────────────────────────────────────────────
+function renderAdmin(){
+  // School name
+  document.getElementById('schoolNameText').textContent=D.schoolName;
+  // Subject list in sidebar
+  renderAdminSubjList();
+  // Main area
+  renderAdminMatArea();
+  // Video tab populate
+  document.getElementById('vidTitle').value=D.featuredVideo?.title||'';
+  document.getElementById('vidUrl').value=D.featuredVideo?.url||'';
+  document.getElementById('vidDesc').value=D.featuredVideo?.description||'';
+  updateVidPreview();
+  updateFeaturedStatus();
+  // Sudut video list (pre-render so it's ready when tab is clicked)
+  renderSudutAdminList();
+}
+
+function renderAdminSubjList(){
+  const el=document.getElementById('adminSubjList');
+  if(!D.subjects.length){
+    el.innerHTML='<p style="color:#ccc;font-size:12px;text-align:center;padding:10px 0">Tiada subjek</p>';
+    return;
+  }
+  el.innerHTML=D.subjects.map(s=>`
+    <div class="subj-list-item${adminSelSubjId===s.id?' active':''}" onclick="selectAdminSubj('${s.id}')">
+      <span class="subj-list-emoji">${esc(s.emoji)}</span>
+      <div class="subj-list-info">
+        <div class="subj-list-name">${esc(s.name)}</div>
+        <div class="subj-list-sub">ETE ${esc(s.ete||'1')}</div>
+      </div>
+      <span class="subj-list-count">${(D.materials[s.id]||[]).length}</span>
+      <button class="subj-del-btn" onclick="event.stopPropagation();deleteSubject('${s.id}')" title="Padam Subjek">×</button>
+    </div>`).join('');
+}
+
+function selectAdminSubj(id){
+  adminSelSubjId=id;
+  addMatOpen=false;
+  renderAdminSubjList();
+  renderAdminMatArea();
+}
+
+function renderAdminMatArea(){
+  const el=document.getElementById('adminMatArea');
+  if(!adminSelSubjId){
+    // auto-select first
+    if(D.subjects.length){ adminSelSubjId=D.subjects[0].id; renderAdminSubjList(); }
+    else {
+      el.innerHTML=`<div class="a-card" style="text-align:center;padding:80px 20px;color:#bbb">
+        <div style="font-size:40px;margin-bottom:12px">👈</div>
+        <p>Tiada subjek. Tambah subjek dahulu.</p></div>`;
+      return;
+    }
+  }
+  const s=D.subjects.find(x=>x.id===adminSelSubjId);
+  if(!s){ el.innerHTML=''; return; }
+  const mats=D.materials[adminSelSubjId]||[];
+
+  const addFormHTML = addMatOpen ? `
+    <div class="add-form" style="border-color:#1a4d2e50;margin-bottom:16px">
+      <div class="add-form-title">📎 Tambah Bahan Baru</div>
+      <div class="form-row">
+        <div>
+          <label class="lbl">Tajuk Bahan *</label>
+          <input id="newMatTitle" class="inp" placeholder="Tajuk bahan...">
+        </div>
+        <div>
+          <label class="lbl">Jenis Bahan *</label>
+          <select id="newMatType" class="inp" style="background:#fff;cursor:pointer" onchange="toggleMatUrlField()">
+            <option value="video">🎬 Video YouTube</option>
+            <option value="file">📄 Fail (Google Drive / URL)</option>
+            <option value="link">🔗 Pautan Luar</option>
+            <option value="note">📝 Nota Teks</option>
+          </select>
+        </div>
+      </div>
+      <div id="matUrlField">
+        <label class="lbl" id="matUrlLabel">URL YouTube</label>
+        <input id="newMatUrl" class="inp" placeholder="https://www.youtube.com/watch?v=...">
+      </div>
+      <label class="lbl" id="matNotesLabel">Penerangan Tambahan (pilihan)</label>
+      <textarea id="newMatNotes" class="inp" style="min-height:76px;resize:vertical" rows="3" placeholder="Penerangan ringkas..."></textarea>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn-green" style="padding:9px 20px;font-size:13px" onclick="addMaterial()">💾 Simpan Bahan</button>
+        <button class="btn-outline-sm" onclick="addMatOpen=false;renderAdminMatArea()">Batal</button>
+      </div>
+    </div>` : '';
+
+  const matsHTML = mats.length===0
+    ? `<div class="a-card" style="text-align:center;padding:60px 20px;color:#ccc">
+        <div style="font-size:36px;margin-bottom:10px">📂</div>
+        <p style="font-size:14px">Tiada bahan lagi. Klik "+ Tambah Bahan".</p></div>`
+    : mats.map((m,i)=>{
+        const tc=TYPE_CFG[m.type]||TYPE_CFG.note;
+        return `<div class="admin-mat-item">
+          <div class="admin-mat-body">
+            <span class="admin-mat-type" style="background:${tc.color}18;color:${tc.color}">${tc.icon} ${tc.label}</span>
+            <span style="font-size:11px;color:#ccc;margin-left:6px">#${i+1} • ${m.addedAt||''}</span>
+            <div class="admin-mat-title">${esc(m.title)}</div>
+            ${m.url?`<div class="admin-mat-url">${esc(m.url)}</div>`:''}
+            ${m.notes?`<div class="admin-mat-notes">${esc(m.notes.slice(0,120))}${m.notes.length>120?'...':''}</div>`:''}
+          </div>
+          <button class="btn-red-sm" onclick="deleteMaterial('${adminSelSubjId}','${m.id}')">🗑️ Padam</button>
+        </div>`;
+      }).join('');
+
+  el.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+      <h2 style="font-size:19px;font-weight:800;color:#111">${esc(s.emoji)} ${esc(s.name)}
+        <span style="font-size:12px;color:#aaa;font-weight:400;margin-left:8px">ETE ${esc(s.ete||'1')} • ${mats.length} bahan</span>
+      </h2>
+      <button class="btn-green" style="padding:9px 18px;font-size:13px" onclick="addMatOpen=${!addMatOpen};renderAdminMatArea()">
+        ${addMatOpen?'✕ Tutup':'+ Tambah Bahan'}
+      </button>
+    </div>
+    ${addFormHTML}
+    ${matsHTML}`;
+}
+
+function toggleMatUrlField(){
+  const t=document.getElementById('newMatType')?.value;
+  if(!t) return;
+  const urlField=document.getElementById('matUrlField');
+  const urlLbl=document.getElementById('matUrlLabel');
+  const notesLbl=document.getElementById('matNotesLabel');
+  const urlInp=document.getElementById('newMatUrl');
+  if(t==='note'){ urlField.style.display='none'; notesLbl.textContent='Kandungan Nota'; }
+  else {
+    urlField.style.display='block';
+    notesLbl.textContent='Penerangan Tambahan (pilihan)';
+    if(t==='video'){ urlLbl.textContent='URL YouTube'; urlInp.placeholder='https://www.youtube.com/watch?v=...'; }
+    else if(t==='file'){ urlLbl.textContent='URL Google Drive / Fail'; urlInp.placeholder='https://drive.google.com/file/d/...'; }
+    else { urlLbl.textContent='URL Pautan'; urlInp.placeholder='https://...'; }
+  }
+}
+
+// ── ADMIN ACTIONS ─────────────────────────────────────────────
+
+function startEditName(){
+  document.getElementById('schoolNameInp').value=D.schoolName;
+  document.getElementById('schoolNameDisplay').style.display='none';
+  document.getElementById('schoolNameEdit').style.display='block';
+}
+function cancelEditName(){
+  document.getElementById('schoolNameDisplay').style.display='flex';
+  document.getElementById('schoolNameEdit').style.display='none';
+}
+function saveSchoolName(){
+  const v=document.getElementById('schoolNameInp').value.trim();
+  if(!v) return;
+  D.schoolName=v; save();
+  document.getElementById('schoolNameText').textContent=v;
+  cancelEditName();
+  showToast('✅ Nama sekolah dikemaskini!','success');
+}
+
+function toggleAddSubjForm(){
+  addSubjOpen=!addSubjOpen;
+  document.getElementById('addSubjForm').style.display=addSubjOpen?'block':'none';
+  if(addSubjOpen) setTimeout(()=>document.getElementById('newSubjName').focus(),50);
+}
+
+function addSubject(){
+  const name=document.getElementById('newSubjName').value.trim();
+  if(!name){ showToast('⚠️ Sila isi nama subjek','error'); return; }
+  const ns={
+    id:uid(),
+    name,
+    emoji:document.getElementById('newSubjEmoji').value.trim()||'📚',
+    color:document.getElementById('newSubjColor').value,
+    ete:document.getElementById('newSubjETE').value,
+  };
+  D.subjects.push(ns);
+  if(!adminSelSubjId) adminSelSubjId=ns.id;
+  document.getElementById('newSubjName').value='';
+  document.getElementById('newSubjEmoji').value='';
+  save(); toggleAddSubjForm();
+  renderAdminSubjList(); renderAdminMatArea();
+  showToast('✅ Subjek ditambah!','success');
+}
+
+function deleteSubject(id){
+  if(!confirm('Padam subjek ini dan semua bahannya? Tindakan tidak boleh dibatalkan.')) return;
+  D.subjects=D.subjects.filter(s=>s.id!==id);
+  delete D.materials[id];
+  if(adminSelSubjId===id) adminSelSubjId=D.subjects[0]?.id||null;
+  save(); renderAdminSubjList(); renderAdminMatArea();
+  showToast('🗑️ Subjek dipadam.','');
+}
+
+function addMaterial(){
+  if(!adminSelSubjId) return;
+  const title=document.getElementById('newMatTitle')?.value.trim();
+  if(!title){ showToast('⚠️ Sila isi tajuk bahan','error'); return; }
+  const type=document.getElementById('newMatType')?.value||'note';
+  const url=(document.getElementById('newMatUrl')?.value||'').trim();
+  const notes=(document.getElementById('newMatNotes')?.value||'').trim();
+  const nm={id:uid(),title,type,url,notes,addedAt:new Date().toLocaleDateString('ms-MY')};
+  if(!D.materials[adminSelSubjId]) D.materials[adminSelSubjId]=[];
+  D.materials[adminSelSubjId].push(nm);
+  addMatOpen=false; save(); renderAdminSubjList(); renderAdminMatArea();
+  showToast('✅ Bahan ditambah!','success');
+}
+
+function deleteMaterial(sid,mid){
+  if(!confirm('Padam bahan ini?')) return;
+  D.materials[sid]=(D.materials[sid]||[]).filter(m=>m.id!==mid);
+  save(); renderAdminSubjList(); renderAdminMatArea();
+  showToast('🗑️ Bahan dipadam.','');
+}
+
+function changePass(){
+  const oldP=document.getElementById('oldPassInp').value;
+  const newP=document.getElementById('newPassInp').value;
+  const msg=document.getElementById('passMsg');
+  if(oldP!==D.adminPass){ msg.style.color='var(--red)'; msg.textContent='❌ Kata laluan lama tidak betul'; return; }
+  if(newP.length<4){ msg.style.color='var(--red)'; msg.textContent='❌ Minimum 4 aksara'; return; }
+  D.adminPass=newP; save();
+  document.getElementById('oldPassInp').value='';
+  document.getElementById('newPassInp').value='';
+  msg.style.color='#16a34a'; msg.textContent='✅ Berjaya ditukar!';
+  setTimeout(()=>msg.textContent='',3000);
+  showToast('✅ Kata laluan ditukar!','success');
+}
+
+function switchAdminTab(t){
+  adminTab=t;
+  document.getElementById('adminTabMat').style.display   = t==='materials' ? 'block':'none';
+  document.getElementById('adminTabVid').style.display   = t==='video'     ? 'block':'none';
+  document.getElementById('adminTabSudut').style.display = t==='sudut'     ? 'block':'none';
+  document.getElementById('tabBtnMat').classList.toggle('active',   t==='materials');
+  document.getElementById('tabBtnVid').classList.toggle('active',   t==='video');
+  document.getElementById('tabBtnSudut').classList.toggle('active', t==='sudut');
+  if(t==='sudut') renderSudutAdminList();
+}
+
+// ── FEATURED VIDEO ────────────────────────────────────────────
+function updateVidPreview(){
+  const url=document.getElementById('vidUrl')?.value||'';
+  const id=ytId(url);
+  const wrap=document.getElementById('vidPreviewWrap');
+  const frame=document.getElementById('vidPreviewFrame');
+  if(id){ wrap.style.display='block'; frame.src='https://www.youtube.com/embed/'+id; }
+  else  { wrap.style.display='none'; frame.src=''; }
+}
+function updateFeaturedStatus(){
+  const el=document.getElementById('featuredStatus');
+  const clearBtn=document.getElementById('clearFeaturedBtn');
+  if(D.featuredVideo?.url){
+    el.style.background='#f0fdf4'; el.style.border='1px solid #bbf7d0'; el.style.color='#166534';
+    el.textContent='✅ Video utama sedang dipaparkan di laman utama.';
+    clearBtn.style.display='block';
+  } else {
+    el.style.background='#fffbeb'; el.style.border='1px solid #fcd34d'; el.style.color='#92400e';
+    el.textContent='⚠️ Tiada video utama diset. Video tidak akan dipapar di laman utama.';
+    clearBtn.style.display='none';
+  }
+}
+function saveFeaturedVideo(){
+  const title=document.getElementById('vidTitle').value.trim();
+  const url=document.getElementById('vidUrl').value.trim();
+  const description=document.getElementById('vidDesc').value.trim();
+  D.featuredVideo={title,url,description}; save();
+  const btn=document.getElementById('saveFeaturedBtn');
+  btn.textContent='✅ Tersimpan!';
+  setTimeout(()=>btn.textContent='💾 Simpan & Papar di Laman Utama',2500);
+  updateFeaturedStatus();
+  showToast('✅ Video utama disimpan!','success');
+}
+function clearFeaturedVideo(){
+  D.featuredVideo={title:'',url:'',description:''};
+  document.getElementById('vidTitle').value='';
+  document.getElementById('vidUrl').value='';
+  document.getElementById('vidDesc').value='';
+  document.getElementById('vidPreviewWrap').style.display='none';
+  document.getElementById('vidPreviewFrame').src='';
+  save(); updateFeaturedStatus();
+  showToast('Video utama dibuang.','');
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+load();
+// auto-select first subject for admin
+if(D.subjects.length) adminSelSubjId=D.subjects[0].id;
+showPage('home');
+</script>
+</body>
+</html>
